@@ -1,0 +1,4 @@
+#!/bin/sh
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
+export NODE_ICU_DATA="${SELF_DIR}/../share/icu"
+exec "${SELF_DIR}/node" "${SELF_DIR}/../lib/node_modules/npm/bin/npm-cli.js" "$@"
