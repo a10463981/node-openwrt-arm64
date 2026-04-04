@@ -1,44 +1,63 @@
-# Node.js v23.2.0 for OpenWrt / iStoreOS
+# Node.js for OpenWrt / iStoreOS
 
-预编译的 Node.js v23.2.0，适用于 **OpenWrt / iStoreOS** (arm64, musl libc)。
+预编译的 Node.js，适用于 **OpenWrt / iStoreOS** (arm64, musl libc)。
+
+## 📦 版本
+
+| 版本 | Node.js | npm | 下载 |
+|------|---------|-----|------|
+| [v23.2.0](https://github.com/a10463981/node-openwrt-arm64/releases/tag/v23.2.0) | 23.2.0 | 10.9.1 | [下载](https://github.com/a10463981/node-openwrt-arm64/releases/download/v23.2.0/node-v23.2.0-openwrt-arm64-fixed.tar.gz) |
+| [v22.15.1](https://github.com/a10463981/node-openwrt-arm64/releases/tag/v22.15.1) | 22.15.1 | 10.9.1 | [下载](https://github.com/a10463981/node-openwrt-arm64/releases/download/v22.15.1/node-v22.15.1-openwrt-arm64-fixed.tar.gz) |
 
 ## 🎯 特色
 
-- ✅ **开箱即用**：解释器路径和 ICU 数据路径已修复，无需手动 patchelf
+- ✅ **开箱即用**：自动安装到 `/opt/node22` 或 `/opt/node23`，无需手动配置路径
 - ✅ **纯 musl**：专为 OpenWrt/musl 环境编译
 - ✅ **arm64 架构**：适用于 iStoreOS 及同类固件
+- ✅ **完整 ICU**：内置 ICU 数据，支持 Unicode 正则等国际化功能
 
 ## 📦 包含组件
 
-- `node` v23.2.0
-- `npm` 10.9.1
-- `npx` 10.9.1
-- 完整 ICU 数据 ( bundled )
+- `node` 主程序
+- `npm` 包管理器
+- `npx` 执行器
+- 完整 ICU 数据
 
 ## 🚀 安装
 
+SSH 登录路由器后执行：
+
 ```bash
-# SSH 登录路由器后执行：
-cd /tmp
-curl -L https://github.com/a10463981/node-openwrt-arm64/releases/download/v23.2.0/node-v23.2.0-openwrt-arm64.tar.gz -o node.tar.gz
-tar -xzf node.tar.gz
-sh install.sh
+# v23.2.0
+curl -L https://github.com/a10463981/node-openwrt-arm64/releases/download/v23.2.0/node-v23.2.0-openwrt-arm64-fixed.tar.gz -o /tmp/node.tar.gz
+mkdir -p /tmp/node23 && tar -xzf /tmp/node.tar.gz -C /tmp/node23
+cd /tmp/node23/*/ && sh install.sh
 source /etc/profile.d/node23.sh
-node --version
+
+# v22.15.1
+curl -L https://github.com/a10463981/node-openwrt-arm64/releases/download/v22.15.1/node-v22.15.1-openwrt-arm64-fixed.tar.gz -o /tmp/node.tar.gz
+mkdir -p /tmp/node22 && tar -xzf /tmp/node.tar.gz -C /tmp/node22
+cd /tmp/node22/*/ && sh install.sh
+source /etc/profile.d/node22.sh
 ```
 
 ## ✅ 验证
 
 ```bash
-node --version   # v23.2.0
-npm --version    # 10.9.1
+node --version
+npm --version
 ```
 
-## 📝 说明
+## 🔧 自定义安装路径
 
-本项目重新打包了 [10000ge10000/luci-app-openclaw](https://github.com/10000ge10000/luci-app-openclaw) 提供的预编译版，并修复了 OpenWrt 兼容性问题：
-- 修正动态链接器路径 (`/opt/openclaw/node/lib/ld-musl-aarch64.so.1` → `/lib/ld-musl-aarch64.so.1`)
-- 设置 `NODE_ICU_DATA` 环境变量指向 bundled ICU 数据
+```bash
+# 安装到自定义目录
+INSTALL_DIR=/自定义路径 sh install.sh
+```
+
+## 📝 源码
+
+基于 [10000ge10000/luci-app-openclaw](https://github.com/10000ge10000/luci-app-openclaw) 预编译版修复
 
 ## ⚠️ 兼容性
 
