@@ -1,4 +1,5 @@
 #!/bin/sh
-SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
-export NODE_ICU_DATA="${SELF_DIR}/../share/icu"
-exec "${SELF_DIR}/node" "${SELF_DIR}/../lib/node_modules/npm/bin/npm-cli.js" "$@"
+# npm wrapper - 使用绝对路径，兼容任意调用位置
+export NODE_ICU_DATA=/opt/node23/share/icu
+export LD_LIBRARY_PATH=/opt/node23/lib:$LD_LIBRARY_PATH
+exec /opt/node23/bin/node /opt/node23/lib/node_modules/npm/bin/npm-cli.js "$@"
